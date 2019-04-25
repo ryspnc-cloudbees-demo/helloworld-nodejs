@@ -10,6 +10,7 @@ pipeline {
     skipDefaultCheckout true
   }
   stages {
+    
     stage('Test') {
       steps {
         checkout scm
@@ -19,6 +20,7 @@ pipeline {
         }
       }
     }
+
     stage('Build and Push Image') {
       when {
         beforeAgent true
@@ -28,5 +30,19 @@ pipeline {
         echo "TODO - build and push image"
       }
     }
+
+  stage('Deploy') {
+      when {
+        beforeAgent true
+        branch 'master'
+      }
+      input {
+        message "Should we continue?"
+      }
+      steps {
+        echo "Continuing with deployment"
+      }
+    }
+
   }
 }
